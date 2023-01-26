@@ -3,7 +3,7 @@ const User = require('../models/userModel');
 class ControllerUser {
     static async create(req, res, next) {
         try {
-            const { username, email, password, role, phoneNumber, address } = req.body;
+            const { username, email, password, phoneNumber, address } = req.body;
             const user = await User.create({ username, email, password, phoneNumber, address });
             res.status(201).json(user);
         } catch (error) {

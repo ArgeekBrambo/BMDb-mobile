@@ -33,8 +33,8 @@ class ControllerMovie {
     }
 
     static async addMovie(req, res, next) {
-        const { original_title, poster_path, backdrop_path, overview, release_date, genre, castname, vote_count, vote_average } = req.body;
-        const authorId = req.user.id;
+        const { original_title, poster_path, backdrop_path, overview, release_date, genre, castname, vote_count, vote_average,ObjectId } = req.body;
+        // const authorId = req.user.id;
         const trans = await sequelize.transaction();
         try {
             if(!original_title || !overview) {
@@ -47,7 +47,7 @@ class ControllerMovie {
                 overview,
                 release_date,
                 genreId: genre,
-                authorId,
+                ObjectId,
                 vote_count,
                 vote_average
             }, {

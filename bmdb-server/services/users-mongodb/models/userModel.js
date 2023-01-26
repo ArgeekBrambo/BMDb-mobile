@@ -21,22 +21,30 @@ class UserModel {
             throw error;
         }
     }
-    
+
     static async read(id) {
         try {
             const db = getDB();
             let result;
             if (id) {
-                result = await db.collection("Users").findOne({ _id: ObjectId(id) });
+                result = await db
+                    .collection("Users")
+                    .findOne(
+                        { _id: ObjectId(id) },
+                        { projection: { password: 0 } }
+                    );
             } else {
-                result = await db.collection("Users").find().toArray();
+                result = await db
+                    .collection("Users")
+                    .find({}, { projection: { password: 0 } })
+                    .toArray();
             }
             return result;
         } catch (error) {
             throw error;
         }
     }
-    
+
     // static async update(id, user) {
     //     const db = getDB();
     //     const result = await db
@@ -44,13 +52,13 @@ class UserModel {
     //     .updateOne({ _id: ObjectId(id) }, { $set: user });
     //     return result;
     // }
-    
+
     static async delete(id) {
         try {
             const db = getDB();
             const result = await db
-            .collection("Users")
-            .deleteOne({ _id: ObjectId(id) });
+                .collection("Users")
+                .deleteOne({ _id: ObjectId(id) });
             return result;
         } catch (error) {
             throw error;
