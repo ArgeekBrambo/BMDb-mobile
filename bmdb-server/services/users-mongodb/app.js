@@ -1,23 +1,22 @@
-const { MongoClient } = require("mongodb");
+const express = require('express');
+const app = express();
+const cors = require('cors');
+const port = 4001
+const { establishConnection } = require('./config/mongoConnection');
+const router = require('./routes/index');
 
-// Replace the uri string with your connection string.
-const uri = "mongodb+srv://pedasmanis:p3d45m4n15@clusterbmdb.ii0nwxo.mongodb.net/test";
+app.use(cors());
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
-const client = new MongoClient(uri);
+app.use('/', router)
 
-async function run() {
-  try {
-    const database = client.db('sample_mflix');
-    const movies = database.collection('movies');
-
-    // Query for a movie that has the title 'Back to the Future'
-    const query = { title: 'Back to the Future' };
-    const movie = await movies.findOne(query);
-
-    console.log(movie);
-  } finally {
-    // Ensures that the client will close when you finish/error
-    await client.close();
-  }
-}
-run().catch(console.dir);
+establishConnection()
+    .then(() => {
+        app.listen(port, () => {
+            console.log(`User service listening at http://localhost:${port}`)
+        })
+    })
+    .catch((error) => {
+        console.log(error);
+    })

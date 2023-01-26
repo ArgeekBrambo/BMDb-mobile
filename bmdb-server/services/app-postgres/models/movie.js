@@ -11,7 +11,6 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      Movie.belongsTo(models.User, { foreignKey: 'authorId', as: 'author' });
       Movie.belongsTo(models.Genre, { foreignKey: 'genreId', as: 'genre' });
       Movie.hasMany(models.MovieCast, { foreignKey: 'movieId' });
     }
@@ -48,15 +47,7 @@ module.exports = (sequelize, DataTypes) => {
       onUpdate: 'cascade',
       onDelete: 'cascade'
     },
-    authorId: {
-      type: DataTypes.INTEGER,
-      references: {
-        model: 'Users',
-        key: 'id'
-      },
-      onUpdate: 'cascade',
-      onDelete: 'cascade'
-    }
+    ObjectId: DataTypes.STRING
   }, {
     sequelize,
     modelName: 'Movie',

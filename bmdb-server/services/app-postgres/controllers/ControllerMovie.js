@@ -22,15 +22,8 @@ class ControllerMovie {
                         as: "genre" ,
                         attributes: ["id", "name"]
                     },
-                    { 
-                        model: User, 
-                        as: "author",
-                        attributes: {
-                            exclude: ["password", "createdAt", "updatedAt", "role", "phoneNumber", "address"]
-                        }
-                    },
                 ],
-                attributes: { exclude: ["createdAt", "updatedAt", "authorId", "genreId"] },
+                attributes: { exclude: ["createdAt", "updatedAt", "genreId"] },
                 order: [["id", "ASC"]]
             });
             res.status(200).json(movies);
@@ -104,15 +97,8 @@ class ControllerMovie {
                         as: "genre" ,
                         attributes: ["id", "name"]
                     },
-                    { 
-                        model: User, 
-                        as: "author",
-                        attributes: {
-                            exclude: ["password", "createdAt", "updatedAt", "role", "phoneNumber", "address"]
-                        }
-                    },
                 ],
-                attributes: { exclude: ["createdAt", "updatedAt", "authorId", "genreId"] },
+                attributes: { exclude: ["createdAt", "updatedAt", "genreId"] },
             });
             if(!movie) {
                 throw { name: "NotFound" };
