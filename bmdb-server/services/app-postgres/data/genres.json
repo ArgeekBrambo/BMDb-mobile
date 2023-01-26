@@ -1,0 +1,86 @@
+[
+    {
+        "name": "Animation"
+    },
+    {
+        "name": "Comedy"
+    },
+    {
+        "name": "Family"
+    },
+    {
+        "name": "Fantasy"
+    },
+    {
+        "name": "Romance"
+    },
+    {
+        "name": "Adventure"
+    },
+    {
+        "name": "Action"
+    },
+    {
+        "name": "Drama"
+    },
+    {
+        "name": "Thriller"
+    },
+    {
+        "name": "Crime"
+    },
+    {
+        "name": "Horror"
+    },
+    {
+        "name": "Mystery"
+    },
+    {
+        "name": "Sci-Fi"
+    },
+    {
+        "name": "War"
+    },
+    {
+        "name": "History"
+    },
+    {
+        "name": "Music"
+    },
+    {
+        "name": "Western"
+    },
+    {
+        "name": "Sport"
+    },
+    {
+        "name": "Biography"
+    },
+    {
+        "name": "Documentary"
+    },
+    {
+        "name": "Musical"
+    },
+    {
+        "name": "Short"
+    },
+    {
+        "name": "Film-Noir"
+    },
+    {
+        "name": "Adult"
+    },
+    {
+        "name": "News"
+    },
+    {
+        "name": "Talk-Show"
+    },
+    {
+        "name": "Reality-TV"
+    },
+    {
+        "name": "Game-Show"
+    }
+]

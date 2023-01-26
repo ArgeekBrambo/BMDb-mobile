@@ -1,0 +1,18 @@
+[
+    {
+        "username": "wirosableng",
+        "email": "wirosableng@mail.com",
+        "password": "wirosableng",
+        "phoneNumber": "081234567890",
+        "role": "admin",
+        "address": "Jl. Kebon Jeruk No. 1"
+    },
+    {
+        "username": "kerasakti",
+        "email": "kerasakti@mail.com",
+        "password": "kerasakti",
+        "phoneNumber": "081234567890",
+        "role": "admin",
+        "address": "awan"
+    }
+]
