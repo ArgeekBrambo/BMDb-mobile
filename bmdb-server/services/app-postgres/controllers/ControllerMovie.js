@@ -111,19 +111,20 @@ class ControllerMovie {
     }
 
     static async editMovie(req, res, next) {
-        const { original_title, poster_path, backdrop_path, overview, release_date, genre, castname, vote_count, vote_average } = req.body;
+        const { original_title, poster_path, backdrop_path, overview, release_date, genre, castname, vote_count, vote_average, ObjectId } = req.body;
         const { id } = req.params;
-        const authorId = req.user.id;
+        // const authorId = req.user.id;
         const newMovie = {
             original_title,
             poster_path,
             backdrop_path,
             overview,
             release_date,
-            genreId: genre.id,
-            authorId,
+            genreId: genre,
             vote_count,
-            vote_average
+            vote_average,
+            slug: original_title.toLowerCase().split(" ").join("-"),
+            ObjectId
         };
         const newCast = {
             name: castname,
@@ -159,7 +160,10 @@ class ControllerMovie {
                 transaction: trans
             })
             await trans.commit()
-            res.status(200).json({movie, movieCast});
+            const editMovie = movie[1][0];
+            const editMovieCast = movieCast[1][0];
+            console.log(editMovie,editMovieCast);
+            res.status(200).json({editMovie, editMovieCast});
         } catch (error) {
             next(error);
         }

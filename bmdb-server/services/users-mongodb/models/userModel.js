@@ -6,12 +6,11 @@ class UserModel {
     static async create({ username, email, password, phoneNumber, address }) {
         try {
             const db = getDB();
-            const salt = await bcrypt.genSalt(10);
-            const hashedPassword = await bcrypt.hash(password, salt);
+            // const hashedPassword = await bcrypt.hash(password, 10);
             const result = await db.collection("Users").insertOne({
                 username,
                 email,
-                password: hashedPassword,
+                password: bcrypt.hashSync(password, 10),
                 role: "admin",
                 phoneNumber,
                 address,

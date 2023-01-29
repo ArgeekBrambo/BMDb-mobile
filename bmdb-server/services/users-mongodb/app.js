@@ -14,7 +14,7 @@ app.use('/', router)
 establishConnection()
     .then(() => {
         app.listen(port, () => {
-            console.log(`User service listening at http://localhost:${port}`)
+            console.log(`User service listening at http://localhost:${port} server mongo`)
         })
     })
     .catch((error) => {
