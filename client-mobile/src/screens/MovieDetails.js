@@ -65,7 +65,7 @@ const MovieDetails = (props) => {
         variables: { id: props.route.params.movieId },
     });
     // console.log(props.route.params.movieId, "movieId");
-    console.log(data, "data");
+    // console.log(data, "data");
 
     return (
         <SafeAreaView>
