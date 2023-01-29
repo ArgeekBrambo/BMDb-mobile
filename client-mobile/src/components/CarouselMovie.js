@@ -3,36 +3,57 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { SliderBox } from "react-native-image-slider-box";
 import Constants from "../styles/Constants";
+import { useQuery, gql } from "@apollo/client";
+
+const GET_MOVIES = gql`
+    query {
+        movies {
+            id
+            original_title
+            backdrop_path
+        }
+    }
+`;
 
 const CarouselMovie = (props) => {
-    const [MovieList, setMovieList] = useState([]);
-    const [ImageList, setImageList] = useState([]);
+    // const [MovieList, setMovieList] = useState([]);
+    // const [ImageList, setImageList] = useState([]);
 
-    useEffect(() => {
-        axios
-            .get("https://bmdb.foxhub.space/customers/movies")
-            .then((result) => {
-                setMovieList(result.data);
-            })
-            .catch((err) => {
-                console.log(err);
-            });
+    // useEffect(() => {
+    //     axios
+    //         .get("https://bmdb.foxhub.space/customers/movies")
+    //         .then((result) => {
+    //             setMovieList(result.data);
+    //         })
+    //         .catch((err) => {
+    //             console.log(err);
+    //         });
 
-        // console.log(MovieList);
-    }, []);
+    //     // console.log(MovieList);
+    // }, []);
 
-    useEffect(() => {
-        const imageList = MovieList.map((movie) => {
-            return "https://image.tmdb.org/t/p/original" + movie.backdrop_path;
-        });
-        setImageList(imageList.slice(0, 10));
-        // console.log(imageList);
-    }, [MovieList]);
+    // useEffect(() => {
+    //     const imageList = MovieList.map((movie) => {
+    //         return "https://image.tmdb.org/t/p/original" + movie.backdrop_path;
+    //     });
+    //     setImageList(imageList.slice(0, 10));
+    //     // console.log(imageList);
+    // }, [MovieList]);
 
+    const { loading, error, data } = useQuery(GET_MOVIES);
+
+    if (loading) return <Text>Loading...</Text>;
     return (
         <View>
             <SliderBox
-                images={ImageList}
+                // images={ImageList}
+                images={data?.movies.map((movie) => {
+                    // console.log(movie);
+                    return (
+                        "https://image.tmdb.org/t/p/original" +
+                        movie.backdrop_path
+                    );
+                })}
                 sliderBoxHeight={200}
                 dotColor={Constants.secondaryColor}
                 inactiveDotColor="#90A4AE"
@@ -68,7 +89,7 @@ const CarouselMovie = (props) => {
                 onCurrentImagePressed={(index) => {
                     // console.log(props);
                     props.navigation.navigate("movieDetails", {
-                        movieId: MovieList[index].id,
+                        movieId: data?.movies[index].id,
                     });
                 }}
             />

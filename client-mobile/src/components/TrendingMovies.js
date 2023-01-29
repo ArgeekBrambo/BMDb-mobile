@@ -4,22 +4,35 @@ import Constants from "../styles/Constants";
 import axios from "axios";
 import Loader from "./Loader";
 import Styles from "../styles/OverallStyle";
+import { useQuery, gql } from "@apollo/client";
+
+const GET_MOVIES = gql`
+    query {
+        movies {
+            id
+            original_title
+            poster_path
+        }
+    }
+`;
 
 const TrendingMovies = (props) => {
-    const [loading, setLoading] = useState(true);
-    const [movies, setMovies] = useState([]);
+    // const [loading, setLoading] = useState(true);
+    // const [movies, setMovies] = useState([]);
 
-    useEffect(() => {
-        axios
-            .get("https://bmdb.foxhub.space/customers/movies")
-            .then((result) => {
-                setMovies(result.data);
-                setLoading(false);
-            })
-            .catch((err) => {
-                console.log(err);
-            });
-    }, []);
+    // useEffect(() => {
+    //     axios
+    //         .get("https://bmdb.foxhub.space/customers/movies")
+    //         .then((result) => {
+    //             setMovies(result.data);
+    //             setLoading(false);
+    //         })
+    //         .catch((err) => {
+    //             console.log(err);
+    //         });
+    // }, []);
+
+    const { loading, error, data } = useQuery(GET_MOVIES);
 
     return (
         <View>
@@ -30,7 +43,7 @@ const TrendingMovies = (props) => {
                     <Text style={Styles.heading}>Trending Movies</Text>
                     <FlatList
                         keyExtractor={(item) => item.id}
-                        data={movies}
+                        data={data?.movies}
                         horizontal={true}
                         renderItem={(item) => displayMovies(item, props)}
                         ItemSeparatorComponent={() => (

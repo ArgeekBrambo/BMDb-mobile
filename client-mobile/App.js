@@ -5,25 +5,29 @@ import HomeScreen from "./src/screens/HomeScreen";
 import Constants from "./src/styles/Constants";
 import Icon from "react-native-vector-icons/Ionicons";
 import MovieDetails from "./src/screens/MovieDetails";
+import { ApolloProvider } from "@apollo/client";
+import client from "./config/apolloConfig";
 
 const Stack = createNativeStackNavigator();
 
 function App() {
     return (
-        <NavigationContainer>
-            <Stack.Navigator screenOptions={{ headerTitleAlign: "center" }}>
-                <Stack.Screen
-                    name="Home"
-                    component={HomeScreen}
-                    options={headerStyle}
-                />
-                <Stack.Screen
-                    name="movieDetails"
-                    component={MovieDetails}
-                    options={{ headerShown: false }}
-                />
-            </Stack.Navigator>
-        </NavigationContainer>
+        <ApolloProvider client={client}>
+            <NavigationContainer>
+                <Stack.Navigator screenOptions={{ headerTitleAlign: "center" }}>
+                    <Stack.Screen
+                        name="Home"
+                        component={HomeScreen}
+                        options={headerStyle}
+                    />
+                    <Stack.Screen
+                        name="movieDetails"
+                        component={MovieDetails}
+                        options={{ headerShown: false }}
+                    />
+                </Stack.Navigator>
+            </NavigationContainer>
+        </ApolloProvider>
     );
 }
 
