@@ -1,0 +1,18 @@
+version: "3.6"
+
+services:
+    orchestrator-service:build:
+        build: ./orchestrator
+        container_name: orchestrator-service
+        ports:
+            - "4000:4000"
+    app-service:
+        build: ./services/app-postgres
+        container_name: app-service
+        ports:
+            - "4002:4002"
+    user-service:
+        build: ./services/user-mongodb
+        container_name: user-service
+        ports:
+            - "4001:4001"
