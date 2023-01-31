@@ -1,6 +1,10 @@
 const axios = require("axios");
 const Redis = require("ioredis");
-const redis = new Redis();
+const redis = new Redis({
+    host: "redis-19174.c1.ap-southeast-1-1.ec2.cloud.redislabs.com",
+    port: 19174,
+    password: "3mlfqMyh9WrF7kNhznywSG4oMi8oR6gG",
+});
 
 const serviceMongoDb = "http://localhost:4001";
 
@@ -40,19 +44,19 @@ const typeDefs = `#graphql
         addUser(user: UserInput): AddUserResponse
         deleteUser(id: String): DeleteUserResponse
     }
-`
+`;
 
 const resolvers = {
     Query: {
         users: async () => {
             try {
-                const userCache = await redis.get("users")
+                const userCache = await redis.get("users");
                 if (userCache) {
-                    return JSON.parse(userCache)
+                    return JSON.parse(userCache);
                 }
                 const { data } = await axios({
                     url: `${serviceMongoDb}/user`,
-                    method: "GET"
+                    method: "GET",
                 });
                 await redis.set("users", JSON.stringify(data));
                 return data;
@@ -60,7 +64,7 @@ const resolvers = {
                 console.log(error);
                 throw error;
             }
-        }
+        },
     },
 
     Mutation: {
@@ -70,7 +74,7 @@ const resolvers = {
                 const { data } = await axios({
                     url: `${serviceMongoDb}/user`,
                     method: "POST",
-                    data: args.user
+                    data: args.user,
                 });
                 await redis.del("users");
                 console.log(data);
@@ -85,7 +89,7 @@ const resolvers = {
             try {
                 const { data } = await axios({
                     url: `${serviceMongoDb}/user/${args.id}`,
-                    method: "DELETE"
+                    method: "DELETE",
                 });
                 await redis.del("users");
                 console.log(data);
@@ -94,8 +98,8 @@ const resolvers = {
                 console.log(error);
                 throw error;
             }
-        }
-    }
-}
+        },
+    },
+};
 
 module.exports = { typeDefs, resolvers };

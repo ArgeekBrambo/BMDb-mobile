@@ -1,6 +1,10 @@
 const axios = require("axios");
 const Redis = require("ioredis");
-const redis = new Redis();
+const redis = new Redis({
+    host: "redis-19174.c1.ap-southeast-1-1.ec2.cloud.redislabs.com",
+    port: 19174,
+    password: "3mlfqMyh9WrF7kNhznywSG4oMi8oR6gG",
+});
 
 const servicePostgres = "http://localhost:4002";
 const serviceMongoDb = "http://localhost:4001";
@@ -176,7 +180,7 @@ const resolvers = {
                 console.log(error);
                 throw error;
             }
-        }
+        },
     },
 
     Mutation: {
@@ -206,7 +210,7 @@ const resolvers = {
                 const movieData = movieResponse.data;
                 // console.dir(movieData, { depth: null });
                 await redis.del("movies");
-                return movieData; 
+                return movieData;
             } catch (error) {
                 console.log(error);
                 throw error;
@@ -225,8 +229,8 @@ const resolvers = {
                 console.log(error);
                 throw error;
             }
-        }
-    }
+        },
+    },
 };
 
 module.exports = { typeDefs, resolvers };

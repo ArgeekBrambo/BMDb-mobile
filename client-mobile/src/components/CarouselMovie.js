@@ -41,6 +41,7 @@ const CarouselMovie = (props) => {
     // }, [MovieList]);
 
     const { loading, error, data } = useQuery(GET_MOVIES);
+    // console.log(data);
 
     if (loading) return <Text>Loading...</Text>;
     return (
